@@ -1,0 +1,59 @@
+.profile {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+}
+
+.updateBlock {
+    position: relative;
+    width: 50%;
+    background: #fff;
+    border: 1px solid black;
+    color: #000;
+    
+    padding: 1rem;
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    font-size: 16px;
+}
+
+label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    width: 80%;
+    margin-bottom: 1rem;
+}
+img {
+    object-fit: contain;
+}
+
+.saveBtn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.6rem;
+    background-color: darkgreen;
+    color: #fff;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1rem;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    right: 1rem;
+    color: #ccc;
+    font-size: 1.4rem;
+}

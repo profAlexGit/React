@@ -1,0 +1,18 @@
+.navPanel {
+    margin-bottom: 1rem;
+    background-color: blue;
+    display: flex;
+}
+
+.link {
+    color: #fff;
+    cursor: pointer;
+    height: 100%;
+    display: block;
+    padding: 1rem;
+}
+
+.link:hover {
+    background-color: dodgerblue;
+}
+

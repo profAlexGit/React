@@ -1,0 +1,34 @@
+.btn {
+    //width: 200px;
+    color: #fff;
+    padding: 0.6rem;
+    text-transform: uppercase;
+}
+.primary_btn {
+    background-color: darkgreen;
+}
+
+.TableUserBlock {
+    display: flex;
+}
+
+.filterBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+table {
+    width: 80%;
+    table-layout: fixed;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #000;
+    border-collapse: collapse;
+
+
+    tr {
+        td {
+            border: 1px solid #000;
+        }
+    }
+}
