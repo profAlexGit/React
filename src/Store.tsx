@@ -20,8 +20,13 @@ class Store  {
     userForUpdate: number = -1;
     isProfileOpen: boolean = false;
     userForAction: user|null = null ;
-    filterAttr: 'first_name'|'last_name' = 'first_name';
-    filterValue: string = '';
+    newUser:user = {
+        last_name: '',
+        first_name: '',
+        avatar: '',
+        email: '',
+        id: -1
+    };
 
     load() {
          this.getAllUsers();
@@ -40,7 +45,6 @@ class Store  {
 
     setUsers(res: user[]): void {
         this.users = res;
-        this.filterAttr = 'first_name';
     }
 
     deleteUser(id:number): void {
@@ -66,31 +70,16 @@ class Store  {
         console.log(userFind)
         if (userFind === -1) {
             this.users.push(updatedUser);
+            this.newUser = updatedUser;
+            console.log('upd ', updatedUser)
         } else {
             this.users[userFind] = updatedUser;
         }
         this.toggle();
     }
 
-    changeFilterAttr(value: 'first_name'|'last_name'): void {
-        this.filterAttr = value;
-    }
-
-    changeFilterValue(value: string): void {
-        this.filterValue = value;
-    }
-
     get getUsers():user[] {
-        if (this.filterValue) {
-            return this.getFilterUsers();
-        }
         return this.users?this.users:[];
-    }
-
-    getFilterUsers():user[] {
-        console.log('фильтрую')
-        const filter = new RegExp(this.filterValue, 'ig');
-        return this.users.filter((user) =>filter.test(user[this.filterAttr]))
     }
 
     get getProfileStatus():boolean {
@@ -112,11 +101,14 @@ class Store  {
         return this.userForAction
     }
 
+    get getNewUser(): user {
+        return this.newUser;
+    }
+
 
     Store = decorate(Store, {
         users: observable,
-        filterAttr: observable,
-        filterValue: observable,
+        newUser: observable,
         isProfileOpen: observable,
         load: action.bound,
         updateUserInfo: action.bound,
@@ -124,10 +116,9 @@ class Store  {
         getAllUsers: action.bound,
         setUsers: action.bound,
         deleteUser: action.bound,
-        changeFilterAttr: action.bound,
-        changeFilterValue: action.bound,
         toggle: action.bound,
         getUsers: computed,
+        getNewUser: computed,
         getProfileStatus:computed,
         getUserForAction: computed
     })

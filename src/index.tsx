@@ -12,7 +12,10 @@ import {UserCardList} from './Components/UserCardListComponent/UserCardList'
 import {UserList} from './Components/UserListComponent/UserList'
 import Modal from './Components/ModalComponent/Modal';
 import {Profile} from './Components/ProfileComponent/Profile';
-import {NavPanel} from './Components/NavPanelComponent/NavPanel'
+import {NavPanel} from './Components/NavPanelComponent/NavPanel';
+
+import {Layout} from 'antd';
+const {Header, Content} = Layout;
 
 const App:React.FC = hot (() => {
     const Store = useStore();
@@ -20,22 +23,26 @@ const App:React.FC = hot (() => {
         Store.load();
     }, [Store])
     
-    return (<>
-        <NavPanel />
-        <Switch>
-            <Route 
-                history = {history}
-                path = '/usercard'
-                component = {UserCardList}
-            />
-            <Route 
-                history = {history}
-                path = '/userlist'
-                component = {UserList}
-            />
-            <Redirect from = '/' to = '/usercard'/>
-        </Switch>
-        </>
+    return (<Layout>
+                <Header>
+                    <NavPanel />
+                </Header>
+                <Content>
+                    <Switch>
+                        <Route 
+                            history = {history}
+                            path = '/usercard'
+                            component = {UserCardList}
+                        />
+                        <Route 
+                            history = {history}
+                            path = '/userlist'
+                            component = {UserList}
+                        />
+                        <Redirect from = '/' to = '/usercard'/>
+                    </Switch>
+                </Content>
+            </Layout>
     )
 })
 

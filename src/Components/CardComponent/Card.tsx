@@ -1,13 +1,11 @@
-import React, {Component, Props} from 'react';
+import React from 'react';
 import {observer} from 'mobx-react-lite';
+import { Card as CardItem} from 'antd';
 
 
 import {user} from '../../Store';
 import {UserInfoCard} from '../UserInfoCardComponent/UserInfoCard';
 import {UserCardControl} from '../UserCardControlComponent/UserCardControl';
-
-import styles from './Card.module.scss';
-
 
 export const Card:React.FC<{user: user}> = observer((props) => {
 
@@ -16,15 +14,25 @@ export const Card:React.FC<{user: user}> = observer((props) => {
     const email = props.user.email;
 
     return (
-        <div className = {styles.userCard}>
+        <CardItem
+            hoverable
+            style={{ 
+                width: 240, 
+                paddingTop: '1rem', 
+                margin: '0 auto', 
+                marginBottom:'1rem',
+                backgroundColor: '#fafafa'
+            }}
+            cover={<img 
+                style = {{objectFit: 'contain'}} alt="example" src={avatar} />}
+        >   
             <UserInfoCard 
-                avatar = {avatar} 
                 name = {name}
                 email = {email}
-                />
+            />
             <UserCardControl 
                 user = {props.user}
-             />
-        </div>
+            />    
+        </CardItem>
     )
 })

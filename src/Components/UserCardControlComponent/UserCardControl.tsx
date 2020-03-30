@@ -2,14 +2,11 @@ import React, {Component} from 'react';
 import {useStore} from '../../hooks/use-store';
 import { observer} from 'mobx-react-lite';
 
-import {Button} from '../ButtonComponent/Button'
 import {user} from '../../Store';
-import styles from './UserCardControl.module.scss';
-
-const updBtnClass = `${styles.btn} ${styles.primary_btn}`;
+import {Button} from 'antd'
 
 export const UserCardControl:React.FC<{
-    user: user
+    user: user,
     }> = observer((props)=> {
 
     const Store = useStore();
@@ -19,12 +16,12 @@ export const UserCardControl:React.FC<{
     }
 
     return (
-        
             <Button 
-                className = {updBtnClass}
-                click = {updateUser}
-                text = 'Изменить'
-            />
+                type = 'primary'
+                onClick = {updateUser}
+            >
+                Изменить
+            </Button>
         
     )
 })

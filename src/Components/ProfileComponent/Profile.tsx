@@ -4,12 +4,14 @@ import { observer} from 'mobx-react-lite';
 
 import {user} from '../../Store'
 import {useStore} from '../../hooks/use-store'
+import { Modal, Button } from 'antd';
+import { Input, Alert } from 'antd';
 
-import {Button} from './../ButtonComponent/Button';
+//import {Button} from './../ButtonComponent/Button';
 import styles from './Profile.module.scss';
 
 
-export const Profile:React.FC = observer(() => {
+export const Profile:React.FC<{users?: user[], setUsers?:(arr:user[])=>void}> = observer((props) => {
 
     const Store = useStore();
     const userForUpdate:user = Store.getUserForAction;
@@ -25,6 +27,7 @@ export const Profile:React.FC = observer(() => {
     }    
 
     const onSaveUser =() => {
+        
         const user:user = {
             first_name,
             last_name,
@@ -32,68 +35,138 @@ export const Profile:React.FC = observer(() => {
             avatar,
             id
         }
+        if (!isValid()) {
+            alert('Все поля должны быть заполнены');
+            return
+        }
         
         Store.updateUserInfo(user);
      }
 
+     const isValid = () => {
+         if (!first_name || !last_name || !email || !avatar) {
+            return false;
+         }
+         return true;
+     }
+
     return(
-        <div className = {styles.updateBlock}>
-            <h3>Редактирование</h3>
-            <div className = {styles.profile}>
-                <Button 
-                        className = {styles.closeBtn}
-                        text = 'X'
-                        click = {onClose}
-                    />
+
+        <Modal
+            visible = {true}
+            title = 'Введите данные'
+            onOk = {onSaveUser}
+            onCancel = {onClose}
+            footer = {[
+                <Button key="back" onClick = {onClose}>
+                    Отмена
+                </Button>,
+                <Button key="submit" type = 'primary' onClick = {onSaveUser}>
+                    Сохранить
+                </Button>
+            ]}
+        >
+            <div className = {styles.updateBlock}>
                 <img src={avatar} alt=""/>
-
                 <div className = {styles.profileInfo}>
-                        <label>
-                            first name
-                            <input 
-                                type="text" 
-                                value = {first_name}
-                                name = 'first_name'
-                                onChange = {(e) => setFirst(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            last name
-                            <input 
-                                type="text"
-                                value = {last_name}
-                                name = 'last_name'
-                                onChange = {(e) => setLast(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            email
-                            <input 
-                                type="email"
-                                value = {email}
-                                name = 'email'
-                                onChange = {(e) => setEmail(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            avatar
-                            <input 
-                                type="url"
-                                value = {avatar}
-                                name = 'avatar'
-                                onChange = {(e) => setAvatar(e.target.value)}
-                            />
-                        </label>
-                    </div>
 
-                    <Button 
-                        className = {styles.saveBtn}
-                        text = 'Сохранить'
-                        click ={onSaveUser}
+                     <Input 
+                        type="text" 
+                        value = {first_name}
+                        name = 'first_name'
+                        size = 'middle'
+                        placeholder = 'Имя'
+                        required
+                        onChange = {(e) => setFirst(e.target.value)}
                     />
-
+                    <Input 
+                        type="text"
+                        value = {last_name}
+                        name = 'last_name'
+                        size = 'middle'
+                        placeholder = 'Фамилия'
+                        required
+                        onChange = {(e) => setLast(e.target.value)}
+                    />
+                    <Input 
+                        type="email"
+                        value = {email}
+                        name = 'email'
+                        size = 'middle'
+                        placeholder = 'email'
+                        required
+                        onChange = {(e) => setEmail(e.target.value)}
+                    />
+                    <Input 
+                        type="url"
+                        value = {avatar}
+                        name = 'avatar'
+                        size = 'middle'
+                        placeholder = 'URL картинки'
+                        required
+                        onChange = {(e) => setAvatar(e.target.value)}
+                    />
+                </div>
             </div>
-        </div>
+        </Modal>
+        
+        // <div className = {styles.updateBlock}>
+        //     <h3>Редактирование</h3>
+        //     <div className = {styles.profile}>
+        //         <Button 
+        //                 className = {styles.closeBtn}
+        //                 text = 'X'
+        //                 click = {onClose}
+        //             />
+        //         <img src={avatar} alt=""/>
+
+        //         <div className = {styles.profileInfo}>
+        //                 <label>
+        //                     first name
+        //                     <input 
+        //                         type="text" 
+        //                         value = {first_name}
+        //                         name = 'first_name'
+        //                         onChange = {(e) => setFirst(e.target.value)}
+        //                     />
+        //                 </label>
+        //                 <label>
+        //                     last name
+        //                     <input 
+        //                         type="text"
+        //                         value = {last_name}
+        //                         name = 'last_name'
+        //                         onChange = {(e) => setLast(e.target.value)}
+        //                     />
+        //                 </label>
+        //                 <label>
+        //                     email
+        //                     <input 
+        //                         type="email"
+        //                         value = {email}
+        //                         name = 'email'
+        //                         onChange = {(e) => setEmail(e.target.value)}
+        //                     />
+        //                 </label>
+        //                 <label>
+        //                     avatar
+        //                     <input 
+        //                         type="url"
+        //                         value = {avatar}
+        //                         name = 'avatar'
+        //                         onChange = {(e) => setAvatar(e.target.value)}
+        //                     />
+        //                 </label>
+        //             </div>
+
+        //             <Button 
+        //                 className = {styles.saveBtn}
+        //                 text = 'Сохранить'
+        //                 click ={onSaveUser}
+        //             />
+
+        //     </div>
+        // </div>
     )
 })
 

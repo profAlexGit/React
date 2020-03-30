@@ -26,6 +26,13 @@ const config = {
             }, 
             {loader: 'sass-loader'}],
         },
+        {
+          test: /\.css$/,
+          use: ['style-loader', {
+              loader: 'css-loader'
+              }, 
+              {loader: 'sass-loader'}],
+          },
       {
         test: /\.ts(x)?$/,
         use: [
